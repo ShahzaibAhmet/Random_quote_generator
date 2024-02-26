@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <style>
+        :root {
+            --blue: #5272ef;
+            --white: #ffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'poppins';
+            box-sizing: border-box;
+
+        }
+
+        body {
+            background: var(--blue);
+
+        }
+
+        .container {
+            height: 375px;
+            width: 580px;
+            background: var(--white);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 1px 2px 51px -2px rgba(0, 0, 0, 0.46) inset, 1px 2px 51px -2px rgba(0, 0, 0, 0.86);
+        }
+
+
+        #day {
+            font-weight: 700;
+            color: #192130;
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 35px;
+        }
+
+        .container div img {
+            width: 20px;
+        }
+
+        .container div #quote {
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: #1e293d;
+        }
+
+        #Aline {
+            width: 20px;
+            height: 1px;
+            background: #696969;
+            border-radius: 10%;
+
+        }
+
+        #Fline {
+            width: 500px;
+            height: 1px;
+            background: #aaaaaa;
+            margin-top: 8px;
+            position: fixed;
+            bottom: 120px;
+            right: 40px;
+        }
+
+
+
+        #author {
+            position: relative;
+            top: -13.5px;
+            left: 26px;
+        }
+
+        #aut {
+            position: relative;
+            /* left: 380px; */
+            margin-top: 30px;
+        }
+
+        #btn {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #copy {
+            position: fixed;
+            left: 440px;
+            bottom: 39px;
+        }
+
+        button {
+            padding: 14px 30px;
+            margin-top: 20px;
+            background: #5272ef;
+            color: #ffff;
+            border: 0;
+            font-size: 15px;
+            border-radius: 30px;
+            position: fixed;
+            bottom: 39px;
+            cursor: pointer;
+        }
+
+        button:focus {
+            /* background: #192130; */
+            box-shadow: 2px 2px 1px #192130;
+            transition: ease-out 0.1s;
+
+        }
+
+        button:hover {
+            /* background: #324464; */
+            box-shadow: 2px 2px 1px #192130;
+            transition: ease-out 0.1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <p id="day">Quote of the Day</p>
+        <div id="box">
+            <div>
+                <img src="images/bxs-quote-left.png">
+                <span id="quote">Random Quote Webapp, Press Generate Quote to start.</span>
+                <img src="images/bxs-quote-right.png">
+            </div>
+            <div id="aut">
+                <p id="Aline"></p><span id="author">Quantum Pulse</span>
+            </div>
+        </div>
+
+        <div id="Fline"></div>
+
+        <div id="btn">
+            <Button type="button" onclick="generatequote()">Generate Quote</Button>
+            <button id="copy" onclick="copy()">Copy</button>
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        const Quotes = ["The greatest glory in living lies not in never falling, but in rising every time we fall.", "The way to get started is to quit talking and begin doing."
+            , "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking. ",
+            "The future belongs to those who believe in the beauty of their dreams. ", "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough",
+            "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success. ",
+            "You may say I'm a dreamer, but I'm not the only one. I hope someday you'll join us. And the world will live as one. ",
+            "You must be the change you wish to see in the world. ",
+            "Spread love everywhere you go. Let no one ever come to you without leaving happier.", "The only thing we have to fear is fear itself. ",
+            "Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.",
+            "Do one thing every day that scares you. ",
+            "Well done is better than well said. ", "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart. ",
+            "It is during our darkest moments that we must focus to see the light.", "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+            "Be yourself; everyone else is already taken. ", "You will face many defeats in life, but never let yourself be defeated.",
+            "Go confidently in the direction of your dreams! Live the life you've imagined. ",
+            "In the end, it's not the years in your life that count. It's the life in your years. ",
+            "Never let the fear of striking out keep you from playing the game.", "If you win, you need not have to explain...If you lose, you should not be there to explain!",
+            "if you want to shine like sun first you have to burn like it.", "And I can fight only for something that I love, love only what I respect, and respect only what I at least know.",
+            "Anyone can deal with victory. Only the mighty can bear defeat.", "Think Thousand times before taking a decision But - After taking decison never turn back even if you get Thousand difficulties!",
+            "The man who has no sense of history, is like a man who has no ears or eyes",
+            "Reading is not an end to itself, but a means to an end.", "War is peace.Freedom is slavery.Ignorance is strength.",
+            "I know not with what weapons World War III will be fought, but World War IV will be fought with sticks and stones.",
+            "Appear weak when you are strong, and strong when you are weak.", "Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.",];
+        
+            const Authors = ["Nelson Mandela", "Walt Disney", "Steve Jobs", "Eleanor Roosevelt", "Oprah Winfrey",
+            "James Cameron", "John Lennon", "Mahatma Gandhi", "Mother Teresa", "Franklin D. Roosevelt",
+            "Martin Luther King Jr.", "Eleanor Roosevelt", "Benjamin Franklin", "Helen Keller", "Aristotle",
+            "Ralph Waldo Emerson", "Oscar Wilde", "Maya Angelou", "Henry David Thoreau", "Abraham Lincoln",
+            "Babe Ruth", "Adolf Hitler", "Adolf Hitler", "Adolf Hitler"
+            , "Adolf Hitler", "Adolf Hitler", "Adolf Hitler", "Adolf Hitler", "George Orwell",
+            "Albert Einstein", "Sun Tzu", "Sun Tzu",];
+
+        function generatequote() {
+
+            // generates a random based on the number of array
+            const i = Math.floor(Math.random() * Quotes.length);
+            quoteText = Quotes[i]
+
+
+            document.getElementById("quote").innerText = Quotes[i];
+            document.getElementById("author").innerText = Authors[i];
+
+        }
+        let quoteText;
+
+
+        
+        function copy() {
+            if (quoteText) {
+                navigator.clipboard.writeText(quoteText);
+                console.log(quoteText);
+                alert("Quote copied to clipboard")
+            } else {
+                alert("No quote to copy. Generate a quote first")
+            }
+        }
+
+
+    </script>
+</body>
+</html>
